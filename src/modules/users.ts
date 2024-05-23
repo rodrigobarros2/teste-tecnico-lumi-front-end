@@ -1,6 +1,21 @@
 import { backendClient } from "../services/api";
 
-interface IUser {}
+interface ElectricityData {
+  quantity: string;
+  price: string;
+  value: string;
+  tariff: string;
+}
+
+export interface IUser {
+  id: string;
+  customerNumber: string;
+  referenceMonth: string;
+  electricity: ElectricityData[];
+  injectedEnergy: ElectricityData[];
+  compensatedEnergy: ElectricityData[];
+  contributionPublicLighting: string;
+}
 
 export const fetchUser = async (): Promise<IUser[]> => {
   const { data } = await backendClient.get("/user");
