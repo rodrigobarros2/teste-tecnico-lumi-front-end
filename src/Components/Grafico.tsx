@@ -38,9 +38,22 @@ const Grafico = ({ dataApi }: any) => {
   );
 
   const electricityConsumption = dataApi.map((entry) => {
-    const electricityQuantity = parseInt(entry.electricity.find((e) => e.quantity).quantity.replace(".", ""));
-    const injectedEnergyQuantity = parseInt(entry.injectedEnergy.find((e) => e.quantity).quantity.replace(".", ""));
+    const electricityQuantity = parseInt(entry.electricity.find((e) => e.quantity)?.quantity.replace(".", ""));
+    const injectedEnergyQuantity = parseInt(entry.injectedEnergy.find((e) => e.quantity)?.quantity.replace(".", ""));
     return electricityQuantity + injectedEnergyQuantity;
+  });
+
+  const valueTotalWithoutGD = dataApi.map((entry) => {
+    const electricityValue = parseFloat(entry.electricity.find((e) => e.value)?.value.replace(",", "."));
+    const injectedEnergyValue = parseFloat(entry.injectedEnergy.find((e) => e.value)?.value.replace(",", "."));
+    const contributionPublicLightingValue = parseFloat(entry.contributionPublicLighting.replace(",", "."));
+
+    return electricityValue + injectedEnergyValue + contributionPublicLightingValue;
+  });
+
+  const compensatedEnergyValues = dataApi.map((entry) => {
+    const compensatedEnergyValue = parseFloat(entry.compensatedEnergy.find((e) => e.value)?.value.replace(",", "."));
+    return compensatedEnergyValue;
   });
 
   const dataKwh = {
@@ -49,12 +62,12 @@ const Grafico = ({ dataApi }: any) => {
       {
         label: "Consumo de Energia Elétrica",
         data: electricityConsumption,
-        backgroundColor: "rgba(255, 99, 132, 0.5)",
+        backgroundColor: "#00FE88",
       },
       {
         label: "Energia Compensada",
         data: compensatedEnergyKWh,
-        backgroundColor: "rgba(53, 162, 235, 0.5)",
+        backgroundColor: "#02231C",
       },
     ],
   };
@@ -64,13 +77,13 @@ const Grafico = ({ dataApi }: any) => {
     datasets: [
       {
         label: "Valor Total sem GD",
-        data: electricityConsumption,
-        backgroundColor: "rgba(255, 99, 132, 0.5)",
+        data: valueTotalWithoutGD,
+        backgroundColor: "#00FE88",
       },
       {
         label: "Economia GD",
-        data: compensatedEnergyKWh,
-        backgroundColor: "rgba(53, 162, 235, 0.5)",
+        data: compensatedEnergyValues,
+        backgroundColor: "#02231C",
       },
     ],
   };

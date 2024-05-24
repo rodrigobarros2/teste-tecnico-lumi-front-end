@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
-import { extractPDF, fetchUser } from "../../modules/users";
+import { extractPDF, fetchUser, getUserData } from "../../modules/users";
 import { IUser } from "../../modules/users";
 import Grafico from "../../Components/Grafico";
+import { useUserData } from "../../hook/useUserData";
 
 type FormValues = {
   file: FileList;
@@ -13,71 +14,37 @@ type FormValues = {
 export const Home = () => {
   const { register, handleSubmit /* setValue, watch, getValues */ } = useForm<FormValues>();
 
-  const [users, setUsers] = useState<IUser[]>([]);
-  const [filteredUsers, setFilteredUsers] = useState<IUser[]>([]);
+  const { users, setUsers } = useUserData();
 
-  const [valoresFormatados, setValoresFormatados] = useState();
+  const [userSelected, setUserSelected] = useState<IUser[]>([]);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const fetchedUsers = await fetchUser();
-        setUsers(fetchedUsers);
-        setFilteredUsers(fetchedUsers);
+        const response = await fetchUser();
+        setUsers(response);
       } catch (error) {
         console.error("Error fetching users:", error);
       }
     };
 
     fetchData();
-  }, []);
+  }, [setUsers]);
 
-  const handleFilterChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = e.target.value.toLowerCase();
-    const filtered = users.filter((user) => user.customerNumber.toLowerCase().includes(value));
-    setFilteredUsers(filtered);
+  const handleUserDataById = async (user: string) => {
+    try {
+      const response = await getUserData(user);
+      setUserSelected(response);
+    } catch (error) {
+      console.error("Error fetching users:", error);
+    }
   };
-
-  const handleFormatandoParaValoresPedidos = () => {
-    /* 
-    //1 grafico
-    Consumo de Energia Elétrica kWh  //electricity + injectedEnergy
-    Energia Compensada kWh          //compensatedEnergy
-    */
-    /* 
-    //2 grafico
-    Valor Total sem GD R$  // electricity +  injectedEnergy  +  contributionPublicLighting
-    Economia GD R$        //compensatedEnergy
-    */
-  };
-
-  /* 
-  interface ElectricityData {
-  quantity: string;
-  price: string;
-  value: string;
-  tariff: string;
-}
-
-export interface IUser {
-  id: string;
-  customerNumber: string;
-  referenceMonth: string;
-
-
-  electricity: ElectricityData[];
-  injectedEnergy: ElectricityData[];
-  compensatedEnergy: ElectricityData[];
-  contributionPublicLighting: string;
-} 
-*/
-
-  handleFormatandoParaValoresPedidos();
 
   const onSubmit = async (data: FormValues) => {
     try {
       const response = await extractPDF(data.file[0]);
-      console.log("Upload bem-sucedido:", response.data);
+      handleUserDataById(response.customerNumber);
+      console.log("Upload bem-sucedido:", response);
     } catch (error) {
       console.error("Erro ao fazer upload:", error);
     }
@@ -98,12 +65,7 @@ export interface IUser {
             <br />
           </div>
 
-          <input
-            type="text"
-            placeholder="Nº DO CLIENTE"
-            {...register("filter")} // Registrar o campo de filtro
-            onChange={handleFilterChange} // Adicionar o manipulador de eventos onChange para filtrar usuários
-          />
+          <input type="text" placeholder="Nº DO CLIENTE" {...register("filter")} />
 
           <br />
           <hr />
@@ -113,9 +75,9 @@ export interface IUser {
             <h2>Users</h2>
 
             <ul>
-              {filteredUsers.map((user) => (
-                <li key={user.id}>
-                  <p>customerNumber: {user.customerNumber}</p>
+              {users.map((user, i) => (
+                <li key={i} className="cursor-pointer" onClick={() => handleUserDataById(user)}>
+                  <p>Nº DO CLIENTE: {user}</p>
                 </li>
               ))}
             </ul>
@@ -125,10 +87,7 @@ export interface IUser {
             <Link to="/user">Info Client</Link>
           </div>
         </div>
-
-        <div className="w-full">
-          <Grafico dataApi={users} />
-        </div>
+        <div className="w-full">{userSelected.length > 0 && <Grafico dataApi={userSelected} />}</div>
       </div>
     </form>
   );

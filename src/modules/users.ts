@@ -17,8 +17,13 @@ export interface IUser {
   contributionPublicLighting: string;
 }
 
-export const fetchUser = async (): Promise<IUser[]> => {
+export const fetchUser = async (): Promise<string[]> => {
   const { data } = await backendClient.get("/user");
+  return data;
+};
+
+export const getUserData = async (id: string): Promise<IUser[]> => {
+  const { data } = await backendClient.get(`/user/${id}`);
   return data;
 };
 
