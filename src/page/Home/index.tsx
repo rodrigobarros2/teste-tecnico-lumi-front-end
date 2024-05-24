@@ -1,8 +1,7 @@
-import React, { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
-import { extractPDF, fetchUser, getUserData } from "../../modules/users";
-import { IUser } from "../../modules/users";
+import { extractPDF, fetchUser } from "../../modules/users";
 import Grafico from "../../Components/Grafico";
 import { useUserData } from "../../hook/useUserData";
 
@@ -13,10 +12,7 @@ type FormValues = {
 
 export const Home = () => {
   const { register, handleSubmit /* setValue, watch, getValues */ } = useForm<FormValues>();
-
-  const { users, setUsers } = useUserData();
-
-  const [userSelected, setUserSelected] = useState<IUser[]>([]);
+  const { users, setUsers, handleUserDataById, userSelected } = useUserData();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -30,15 +26,6 @@ export const Home = () => {
 
     fetchData();
   }, [setUsers]);
-
-  const handleUserDataById = async (user: string) => {
-    try {
-      const response = await getUserData(user);
-      setUserSelected(response);
-    } catch (error) {
-      console.error("Error fetching users:", error);
-    }
-  };
 
   const onSubmit = async (data: FormValues) => {
     try {
