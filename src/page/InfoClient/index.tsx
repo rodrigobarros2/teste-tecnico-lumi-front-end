@@ -1,13 +1,17 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React, { useEffect } from "react";
+import { Link, useLocation } from "react-router-dom";
 import { useUserData } from "../../hook/useUserData";
 
 export const InfoClient: React.FC = () => {
-  const { users, numberClient, userSelected } = useUserData();
+  const { users, numberClient, userSelected, handleUserDataById } = useUserData();
 
-  const handleBaixarFaturaDesseMes = () => {
-    console.log("to aqui");
-  };
+  const location = useLocation();
+  const searchParams = new URLSearchParams(location.search);
+  const query = searchParams.get("filter");
+
+  useEffect(() => {
+    handleUserDataById(query ?? "");
+  }, [handleUserDataById, query]);
 
   return (
     <div>
@@ -19,7 +23,7 @@ export const InfoClient: React.FC = () => {
 
       {userSelected.map((v, i) => (
         <div key={i}>
-          <h1 onClick={() => handleBaixarFaturaDesseMes()}>{v.referenceMonth}</h1>
+          <h1>{v.referenceMonth}</h1>
         </div>
       ))}
 

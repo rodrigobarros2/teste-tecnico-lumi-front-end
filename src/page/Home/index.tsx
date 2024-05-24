@@ -12,7 +12,7 @@ type FormValues = {
 
 export const Home = () => {
   const { register, handleSubmit /* setValue, watch, getValues */ } = useForm<FormValues>();
-  const { users, setUsers, handleUserDataById, userSelected } = useUserData();
+  const { users, setUsers, handleUserDataById, userSelected, numberClient } = useUserData();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -71,7 +71,7 @@ export const Home = () => {
           </div>
 
           <div className="p-6 border border-solid border-red-500">
-            <Link to="/user">Info Client</Link>
+            <Link to={`/user?filter=${numberClient}`}>Info Client</Link>
           </div>
         </div>
         <div className="w-full">{userSelected.length > 0 && <Grafico dataApi={userSelected} />}</div>
