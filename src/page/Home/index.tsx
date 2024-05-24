@@ -31,7 +31,7 @@ export const Home = () => {
     try {
       const response = await extractPDF(data.file[0]);
       handleUserDataById(response.customerNumber);
-      console.log("Upload bem-sucedido:", response);
+      console.log("Upload bem-sucedido:");
     } catch (error) {
       console.error("Erro ao fazer upload:", error);
     }

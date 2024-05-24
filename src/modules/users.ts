@@ -19,8 +19,6 @@ export interface IUser {
 
 export const fetchUser = async (filter?: string) => {
   const { data } = await backendClient.get("/user", { params: { filter } });
-
-  console.log("data", data);
   return data;
 };
 
