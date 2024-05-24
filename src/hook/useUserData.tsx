@@ -1,5 +1,5 @@
 import React, { createContext, Dispatch, ReactNode, SetStateAction, useContext, useState } from "react";
-import { fetchUser, getUserData, IUser } from "../modules/users";
+import { fetchUser, IUser } from "../modules/users";
 
 type SelectProviderProps = {
   children: ReactNode;
@@ -39,7 +39,7 @@ export function MailingProvider({ children }: SelectProviderProps) {
 
   const handleUserDataById = async (user: string) => {
     try {
-      const response = await getUserData(user);
+      const response = await fetchUser(user);
       setNumberClient(user);
       setUserSelected(response);
     } catch (error) {
