@@ -2,8 +2,8 @@ import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
 import { extractPDF, fetchUser, uploadPdf } from "../../modules/users";
-import Grafico from "../../Components/Grafico";
 import { useUserData } from "../../hook/useUserData";
+import Graphic from "../../Components/Graphic";
 
 type FormValues = {
   file: FileList;
@@ -44,7 +44,7 @@ export const Home = () => {
     if (!filterValue) {
       return users;
     }
-    return users.filter((user) => user.includes(filterValue));
+    return users.filter((clientNumber) => clientNumber.includes(filterValue));
   };
 
   const filteredUsers = applyFilter();
@@ -66,7 +66,7 @@ export const Home = () => {
 
           <input
             type="text"
-            placeholder="Filtrar users"
+            placeholder="Filtrar Nº do cliente  "
             value={filterValue}
             onChange={(e) => setFilterValue(e.target.value)}
           />
@@ -79,15 +79,15 @@ export const Home = () => {
             <h2>Users</h2>
 
             <ul>
-              {filteredUsers.map((user, i) => (
+              {filteredUsers.map((clientNumber, index) => (
                 <li
-                  key={i}
+                  key={index}
                   className="cursor-pointer"
                   onClick={() => {
-                    user === numberClient ? null : handleUserDataById(user);
+                    clientNumber === numberClient ? null : handleUserDataById(clientNumber);
                   }}
                 >
-                  <p>Nº DO CLIENTE: {user}</p>
+                  <p>Nº DO CLIENTE: {clientNumber}</p>
                 </li>
               ))}
             </ul>
@@ -97,7 +97,7 @@ export const Home = () => {
             <Link to={`/user?filter=${numberClient}`}>Info Client</Link>
           </div>
         </div>
-        <div className="w-full">{userSelected.length > 0 && <Grafico dataApi={userSelected} />}</div>
+        <div className="w-full">{userSelected.length > 0 && <Graphic dataApi={userSelected} />}</div>
       </div>
     </form>
   );

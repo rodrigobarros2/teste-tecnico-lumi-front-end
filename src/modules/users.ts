@@ -7,6 +7,14 @@ interface ElectricityData {
   tariff: string;
 }
 
+interface Document {
+  id: string;
+  fileName: string;
+  filePath: string;
+  createdAt: string;
+  userId: string;
+}
+
 export interface IUser {
   id: string;
   customerNumber: string;
@@ -15,6 +23,7 @@ export interface IUser {
   injectedEnergy: ElectricityData[];
   compensatedEnergy: ElectricityData[];
   contributionPublicLighting: string;
+  documents: Document[];
 }
 
 export const fetchUser = async (filter?: string) => {
@@ -23,7 +32,7 @@ export const fetchUser = async (filter?: string) => {
 };
 
 export const getPdfDownload = async (id: string) => {
-  window.open(`${import.meta.env.VITE_REACT_API_URL}/download/${id}`, "_blank");
+  window.open(`${import.meta.env.VITE_REACT_API_URL}/download/${id}`);
 };
 
 export const extractPDF = async (pdfFile: File) => {
