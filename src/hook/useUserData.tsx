@@ -27,7 +27,7 @@ const UserContext = createContext<UserContextProps>({
   setNumberClient: () => {},
 });
 
-export function MailingProvider({ children }: SelectProviderProps) {
+export function LuminiProvider({ children }: SelectProviderProps) {
   const [users, setUsers] = useState<string[]>([]);
   const [userSelected, setUserSelected] = useState<IUser[]>([]);
   const [numberClient, setNumberClient] = useState("");
