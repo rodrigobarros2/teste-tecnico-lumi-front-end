@@ -31,7 +31,20 @@ const optionsMonetaryValues = {
 
 const Grafico = ({ dataApi }: any) => {
   const mesDoBoleto = dataApi.map((entry) => entry.referenceMonth);
-  const labels = mesDoBoleto;
+
+  function compararDatas(a, b) {
+    const [mesA, anoA] = a.split("/");
+    const [mesB, anoB] = b.split("/");
+
+    if (anoA !== anoB) {
+      return anoA - anoB;
+    }
+
+    const meses = ["JAN", "FEV", "MAR", "ABR", "MAI", "JUN", "JUL", "AGO", "SET", "OUT", "NOV", "DEZ"];
+    return meses.indexOf(mesA) - meses.indexOf(mesB);
+  }
+
+  const labels = mesDoBoleto.sort(compararDatas);
 
   const compensatedEnergyKWh = dataApi.map((entry) =>
     entry.compensatedEnergy.find((e) => e.quantity).quantity.replace(".", "")

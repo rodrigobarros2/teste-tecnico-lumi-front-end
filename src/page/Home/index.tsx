@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
 import { extractPDF, fetchUser, uploadPdf } from "../../modules/users";
@@ -11,8 +11,10 @@ type FormValues = {
 };
 
 export const Home = () => {
-  const { register, handleSubmit /* setValue, watch, getValues */ } = useForm<FormValues>();
-  const { users, setUsers, handleUserDataById, userSelected, numberClient } = useUserData();
+  const { register, handleSubmit } = useForm<FormValues>();
+  const { users, setUsers, handleUserDataById, userSelected, numberClient, handleGetUsers } = useUserData();
+
+  const [filterValue, setFilterValue] = useState<string>("");
 
   useEffect(() => {
     const fetchData = async () => {
@@ -32,11 +34,20 @@ export const Home = () => {
       const responseExtractPdf = await extractPDF(data.file[0]);
       uploadPdf(data.file[0], responseExtractPdf.id);
       handleUserDataById(responseExtractPdf.customerNumber);
-      console.log("Upload bem-sucedido:");
+      handleGetUsers();
     } catch (error) {
       console.error("Erro ao fazer upload:", error);
     }
   };
+
+  const applyFilter = () => {
+    if (!filterValue) {
+      return users;
+    }
+    return users.filter((user) => user.includes(filterValue));
+  };
+
+  const filteredUsers = applyFilter();
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
@@ -53,7 +64,12 @@ export const Home = () => {
             <br />
           </div>
 
-          <input type="text" placeholder="Nº DO CLIENTE" {...register("filter")} />
+          <input
+            type="text"
+            placeholder="Filtrar users"
+            value={filterValue}
+            onChange={(e) => setFilterValue(e.target.value)}
+          />
 
           <br />
           <hr />
@@ -63,8 +79,14 @@ export const Home = () => {
             <h2>Users</h2>
 
             <ul>
-              {users.map((user, i) => (
-                <li key={i} className="cursor-pointer" onClick={() => handleUserDataById(user)}>
+              {filteredUsers.map((user, i) => (
+                <li
+                  key={i}
+                  className="cursor-pointer"
+                  onClick={() => {
+                    user === numberClient ? null : handleUserDataById(user);
+                  }}
+                >
                   <p>Nº DO CLIENTE: {user}</p>
                 </li>
               ))}
