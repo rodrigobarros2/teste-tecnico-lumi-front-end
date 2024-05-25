@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
-import { extractPDF, fetchUser } from "../../modules/users";
+import { extractPDF, fetchUser, uploadPdf } from "../../modules/users";
 import Grafico from "../../Components/Grafico";
 import { useUserData } from "../../hook/useUserData";
 
@@ -29,8 +29,9 @@ export const Home = () => {
 
   const onSubmit = async (data: FormValues) => {
     try {
-      const response = await extractPDF(data.file[0]);
-      handleUserDataById(response.customerNumber);
+      const responseExtractPdf = await extractPDF(data.file[0]);
+      uploadPdf(data.file[0], responseExtractPdf.id);
+      handleUserDataById(responseExtractPdf.customerNumber);
       console.log("Upload bem-sucedido:");
     } catch (error) {
       console.error("Erro ao fazer upload:", error);
