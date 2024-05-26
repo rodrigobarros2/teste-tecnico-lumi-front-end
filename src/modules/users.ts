@@ -1,6 +1,11 @@
+import { AxiosError } from "axios";
 import { backendClient } from "../services/api";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+
+function isAxiosError(error: unknown): error is AxiosError {
+  return (error as AxiosError).isAxiosError !== undefined;
+}
 
 interface ElectricityData {
   quantity: string;
@@ -50,10 +55,16 @@ export const extractPDF = async (pdfFile: File) => {
     toast.success("PDF cadastrado com sucesso!");
     return data;
   } catch (error) {
-    if (error.response.status === 409) {
-      toast.error("Usuário com mês de refencia já cadastrado");
-    } else if (error.response.status === 400) {
-      toast.error("Selecione um arquivo para enviar");
+    if (isAxiosError(error)) {
+      if (error.response?.status === 409) {
+        toast.error("Usuário com mês de referência já cadastrado");
+      } else if (error.response?.status === 400) {
+        toast.error("Selecione um arquivo para enviar");
+      } else {
+        toast.error("Ocorreu um erro. Tente novamente mais tarde.");
+      }
+    } else {
+      toast.error("Erro de rede ou servidor não disponível.");
     }
 
     throw error;
