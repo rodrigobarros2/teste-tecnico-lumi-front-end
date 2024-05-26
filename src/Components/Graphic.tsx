@@ -1,6 +1,7 @@
 import { Chart as ChartJS, CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend } from "chart.js";
 import { Bar } from "react-chartjs-2";
 import { IUser } from "../modules/users";
+import { compareDatesChronologically } from "../utils/compareDatesChronologically";
 
 interface GraphicProps {
   dataApi: IUser[];
@@ -36,33 +37,6 @@ const optionsMonetaryValues = {
 
 const Graphic: React.FC<GraphicProps> = ({ dataApi }) => {
   const ticketMonth = dataApi.map((entry) => entry.referenceMonth);
-
-  function compareDatesChronologically(a: string, b: string): number {
-    const [monthA, yearA] = a.split("/");
-    const [monthB, yearB] = b.split("/");
-
-    if (yearA !== yearB) {
-      return parseInt(yearA) - parseInt(yearB);
-    }
-
-    const months: Record<string, number> = {
-      JAN: 0,
-      FEV: 1,
-      MAR: 2,
-      ABR: 3,
-      MAI: 4,
-      JUN: 5,
-      JUL: 6,
-      AGO: 7,
-      SET: 8,
-      OUT: 9,
-      NOV: 10,
-      DEZ: 11,
-    };
-
-    return months[monthA] - months[monthB];
-  }
-
   const labels = ticketMonth.sort(compareDatesChronologically);
 
   const compensatedEnergyKWh = dataApi.map((entry) => {

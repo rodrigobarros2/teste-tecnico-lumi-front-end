@@ -55,7 +55,7 @@ export const Home = () => {
       <div className="flex flex-col min-h-screen">
         <Header />
         <div className="flex-1 bg-gray-200 py-8">
-          <div className="container mx-auto grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div className="container mx-auto grid grid-cols-1 md:grid-cols-3 gap-8  ">
             <div className="rounded-lg border bg-white text-card-foreground shadow-sm">
               <div className="flex flex-col space-y-1.5 p-6">
                 <h3 className="whitespace-nowrap text-2xl font-semibold leading-none tracking-tight">Arquivo</h3>
@@ -64,7 +64,7 @@ export const Home = () => {
                 <div className="grid w-full max-w-sm items-center gap-1.5">
                   <label
                     className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                    htmlFor="picture"
+                    htmlFor="fileInput"
                   >
                     Arquivo
                   </label>
@@ -74,16 +74,17 @@ export const Home = () => {
                       type="file"
                       className="cursor-pointer flex h-10 w-full rounded-md border px-3 py-2 text-sm file:border-0 file:bg-transparent file:text-sm file:font-medium"
                       {...register("file")}
+                      name="file"
                     />
-
                     <button
                       type="submit"
-                      className="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium h-10 border-green-900 border px-4 py-2"
+                      className="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium h-10 border border-green-900 px-4 py-2"
                     >
                       Enviar PDF
                     </button>
                   </div>
                 </div>
+
                 <div className="grid w-full max-w-sm items-center gap-1.5 mt-4">
                   <label
                     className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
@@ -105,7 +106,7 @@ export const Home = () => {
                     Lista de números de clientes
                   </label>
 
-                  <div className="bg-gray-100 rounded-md p-4">
+                  <div className={`${users.length > 0 ? "bg-gray-300" : "aa"} bg-gray-3 rounded-md p-4`}>
                     <ul className="space-y-3">
                       {filteredUsers.map((clientNumber, index) => (
                         <li
@@ -113,7 +114,7 @@ export const Home = () => {
                           className={`cursor-pointer flex items-center gap-3 rounded-lg px-4 py-3 transition-colors ${
                             clientNumber === numberClient
                               ? "bg-green-950 text-white"
-                              : "bg-green-700 text-white hover:bg-green-950"
+                              : "bg-gray-400 text-white hover:bg-green-950"
                           }`}
                           onClick={() => {
                             clientNumber === numberClient ? null : handleUserDataById(clientNumber);
@@ -126,15 +127,20 @@ export const Home = () => {
                   </div>
                 </div>
               </div>
-              <div className="items-center p-6 flex justify-center">
-                <Link to={`/user?filter=${numberClient}`}>
-                  <button className="border-green-950 text-sm font-medium border border-input h-9 rounded-md px-3">
-                    Ver informações dos clientes
-                  </button>
-                </Link>
-              </div>
+
+              {users.length > 0 ? (
+                <div className="items-center p-6 flex justify-center">
+                  <Link to={`/user?filter=${numberClient}`}>
+                    <button className="border-green-950 text-sm font-medium border border-input h-9 rounded-md px-3">
+                      Ver informações dos clientes
+                    </button>
+                  </Link>
+                </div>
+              ) : (
+                ""
+              )}
             </div>
-            <div className="bg-white rounded-lg shadow-md p-6 col-span-2">
+            <div className="bg-white rounded-lg shadow-md p-6 md:col-span-2 col-span-0">
               <div className="flex flex-col space-y-1.5 p-6">
                 <h3 className="whitespace-nowrap text-2xl font-semibold leading-none tracking-tight">Gráficos</h3>
                 <div className="w-full">{userSelected.length > 0 && <Graphic dataApi={userSelected} />}</div>

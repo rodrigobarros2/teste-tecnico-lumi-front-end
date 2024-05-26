@@ -62,7 +62,6 @@ export const InfoClient: React.FC = () => {
                       <div>
                         <div className="font-medium">{value.referenceMonth}</div>
                       </div>
-
                       <div key={index} className="flex items-center space-x-2">
                         <button
                           onClick={() => handleDownloadPdf(value)}

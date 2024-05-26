@@ -1,5 +1,6 @@
 import React, { createContext, Dispatch, ReactNode, SetStateAction, useContext, useState } from "react";
 import { fetchUser, IUser } from "../modules/users";
+import { returnsOrganizedData } from "../utils/compareDatesChronologically";
 
 type SelectProviderProps = {
   children: ReactNode;
@@ -41,6 +42,7 @@ export function LuminiProvider({ children }: SelectProviderProps) {
     try {
       const response = await fetchUser(user);
       setNumberClient(user);
+      returnsOrganizedData(response);
       setUserSelected(response);
     } catch (error) {
       console.error("Error fetching users:", error);
