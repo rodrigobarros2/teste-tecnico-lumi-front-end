@@ -1,7 +1,7 @@
 import { Chart as ChartJS, CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend } from "chart.js";
 import { Bar } from "react-chartjs-2";
-import { IUser } from "../modules/users";
-import { compareDatesChronologically } from "../utils/compareDatesChronologically";
+import { IUser } from "../../modules/users";
+import { compareDatesChronologically } from "../../utils/compareDatesChronologically";
 
 interface GraphicProps {
   dataApi: IUser[];
