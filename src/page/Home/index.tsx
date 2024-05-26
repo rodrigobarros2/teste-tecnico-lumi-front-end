@@ -66,7 +66,7 @@ export const Home = () => {
                     className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
                     htmlFor="fileInput"
                   >
-                    Arquivo
+                    Escolha o PDF a ser enviado
                   </label>
                   <div className="flex items-center space-x-2">
                     <input

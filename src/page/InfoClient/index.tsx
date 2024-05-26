@@ -50,7 +50,7 @@ export const InfoClient: React.FC = () => {
               </Link>
             </div>
           </div>
-          <div className="bg-white rounded-lg shadow-md p-6 col-span-2">
+          <div className="bg-white rounded-lg shadow-md p-6 md:col-span-2 col-span-0">
             <div className="flex flex-col space-y-1.5 p-6">
               <h3 className="whitespace-nowrap text-2xl font-semibold leading-none tracking-tight">Boletos</h3>
             </div>
