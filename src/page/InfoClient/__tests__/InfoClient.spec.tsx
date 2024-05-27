@@ -1,9 +1,9 @@
 import { render, screen, fireEvent, waitFor } from "@testing-library/react";
 import { BrowserRouter } from "react-router-dom";
-import { InfoClient } from "./index";
-import { getPdfDownload } from "../../modules/users";
+import { InfoClient } from "..";
+import { getPdfDownload } from "../../../modules/users";
 
-jest.mock("../../hook/useUserData", () => ({
+jest.mock("../../../hook/useUserData", () => ({
   useUserData: jest.fn(() => ({
     numberClient: "123",
     userSelected: [
@@ -22,7 +22,7 @@ jest.mock("../../hook/useUserData", () => ({
   })),
 }));
 
-jest.mock("../../modules/users", () => ({
+jest.mock("../../../modules/users", () => ({
   getPdfDownload: jest.fn(),
 }));
 

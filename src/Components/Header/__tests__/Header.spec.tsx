@@ -1,5 +1,5 @@
 import { render, screen } from "@testing-library/react";
-import { Header } from "./index";
+import { Header } from "../index";
 
 test("renders Header component with correct text and styles", () => {
   render(<Header />);

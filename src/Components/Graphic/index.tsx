@@ -3,7 +3,7 @@ import { Chart as ChartJS, CategoryScale, LinearScale, BarElement, Title, Toolti
 import { Bar } from "react-chartjs-2";
 import { IUser } from "../../modules/users";
 import { compareDatesChronologically } from "../../utils/compareDatesChronologically";
-import { calculateCompensatedEnergyKWh } from "../../utils/calculateCompensatedEnergy";
+import { calculateCompensatedEnergyKWh } from "../../utils/calculateCompensatedEnergy/calculateCompensatedEnergy";
 
 interface GraphicProps {
   dataApi: IUser[];

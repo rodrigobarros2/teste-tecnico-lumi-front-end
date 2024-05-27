@@ -1,5 +1,5 @@
-import { calculateCompensatedEnergyKWh } from "../../utils/calculateCompensatedEnergy";
-import { IUser } from "../../modules/users";
+import { IUser } from "../../../modules/users";
+import { calculateCompensatedEnergyKWh } from "../calculateCompensatedEnergy";
 
 test("calculates compensated energy correctly", () => {
   const dataApi: IUser[] = [
