@@ -51,7 +51,7 @@ export const Home = () => {
   const filteredUsers = applyFilter();
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
+    <form onSubmit={handleSubmit(onSubmit)} role="form">
       <div className="flex flex-col min-h-screen">
         <Header />
         <div className="flex-1 bg-gray-200 py-8">
