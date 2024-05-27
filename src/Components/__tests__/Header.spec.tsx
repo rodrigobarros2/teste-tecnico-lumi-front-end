@@ -1,7 +1,7 @@
 import { render, screen } from "@testing-library/react";
-import { Header } from "../index";
+import { Header } from "../Header";
 
-test("renders Header component with correct text and styles", () => {
+test("Should be header component with correct text and styles", () => {
   render(<Header />);
 
   const titleElement = screen.getByText(/Dashboard/i);

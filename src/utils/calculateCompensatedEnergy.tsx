@@ -1,4 +1,4 @@
-import { IUser } from "../../modules/users";
+import { IUser } from "../modules/users";
 
 export function calculateCompensatedEnergyKWh(dataApi: IUser[]): number[] {
   return dataApi.map((entry) => {

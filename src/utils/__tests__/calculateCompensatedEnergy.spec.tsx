@@ -1,7 +1,7 @@
-import { IUser } from "../../../modules/users";
+import { IUser } from "../../modules/users";
 import { calculateCompensatedEnergyKWh } from "../calculateCompensatedEnergy";
 
-test("calculates compensated energy correctly", () => {
+test("Should be calculates compensated energy correctly", () => {
   const dataApi: IUser[] = [
     {
       id: "37072010-0434-4d35-bc89-eaf459edcc87",
