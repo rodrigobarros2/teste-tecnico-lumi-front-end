@@ -1,25 +1,21 @@
 import { calculateCompensatedEnergyKWh } from "../../utils/calculateCompensatedEnergy";
+import { IUser } from "../../modules/users";
 
 test("calculates compensated energy correctly", () => {
-  const dataApi = [
+  const dataApi: IUser[] = [
     {
-      compensatedEnergy: [{ quantity: "1.000" }],
-    },
-    {
-      compensatedEnergy: [{ quantity: "2.500" }],
-    },
-    {
-      compensatedEnergy: [{ quantity: null }],
-    },
-    {
-      compensatedEnergy: [{ quantity: "3.300" }],
-    },
-    {
-      compensatedEnergy: [],
+      id: "37072010-0434-4d35-bc89-eaf459edcc87",
+      customerNumber: "7005400387",
+      referenceMonth: "NOV/2023",
+      electricity: [{ quantity: "50", price: "0,95274072", value: "47,62", tariff: "0,74906000" }],
+      injectedEnergy: [{ quantity: "625", price: "0,50827076", value: "317,65", tariff: "0,48733000" }],
+      compensatedEnergy: [{ quantity: "625", price: "0,48733000", value: "-304,58", tariff: "0,48733000" }],
+      contributionPublicLighting: "49,43",
+      documents: [],
     },
   ];
 
-  const expected = [1000, 2500, 0, 3300, 0];
+  const expected = [625];
 
   expect(calculateCompensatedEnergyKWh(dataApi)).toEqual(expected);
 });
