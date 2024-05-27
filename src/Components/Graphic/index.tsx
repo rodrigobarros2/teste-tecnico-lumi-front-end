@@ -1,7 +1,9 @@
+import React from "react";
 import { Chart as ChartJS, CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend } from "chart.js";
 import { Bar } from "react-chartjs-2";
 import { IUser } from "../../modules/users";
 import { compareDatesChronologically } from "../../utils/compareDatesChronologically";
+import { calculateCompensatedEnergyKWh } from "../../utils/calculateCompensatedEnergy";
 
 interface GraphicProps {
   dataApi: IUser[];
@@ -39,9 +41,7 @@ const Graphic: React.FC<GraphicProps> = ({ dataApi }) => {
   const ticketMonth = dataApi.map((entry) => entry.referenceMonth);
   const labels = ticketMonth.sort(compareDatesChronologically);
 
-  const compensatedEnergyKWh = dataApi.map((entry) => {
-    return parseFloat((entry.compensatedEnergy.find((e) => e.quantity)?.quantity ?? "0").replace(".", ""));
-  });
+  const compensatedEnergyKWh = calculateCompensatedEnergyKWh(dataApi);
 
   const electricityConsumption = dataApi.map((entry) => {
     const electricityQuantityString = entry.electricity.find((e) => e.quantity)?.quantity;
