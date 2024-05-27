@@ -1,29 +1,50 @@
-# Nome do Projeto
 
-Breve descrição do projeto e seus objetivos.
+## Foi realizado o deploy da aplicação
 
-## Tecnologias Utilizadas
 
-- React
-- Node.js
-- npm ou yarn
-- Outras bibliotecas relevantes
+https://lumini-teste-tecnico-front.vercel.app/
 
-## Pré-requisitos
 
-Antes de começar, certifique-se de ter as seguintes ferramentas instaladas em sua máquina:
+Caso queiram rodar localmente, basta seguir os seguintes passos
 
-- [Node.js](https://nodejs.org/)
-- [npm](https://www.npmjs.com/) ou [yarn](https://yarnpkg.com/)
+## Rodando localmente
 
-## Instalação
+Clone o projeto
 
-1. Clone o repositório:
+```bash
+  git clone https://github.com/rodrigobarros2/lumini-teste-tecnico-front.git
+```
 
-   ```bash
-   git clone https://github.com/seu-usuario/seu-repositorio.git
+Entre no diretório do projeto
 
-2. Navegue até o diretório do projeto:
+```bash
+  cd lumini-teste-tecnico-front
+```
 
-   ```cd seu-repositorio
+Instale as dependências
 
+```bash
+  npm install
+```
+
+Inicie o servidor
+
+```bash
+  npm run start
+```
+
+
+## Rodando os testes
+
+Para rodar os testes, rode o seguinte comando
+
+```bash
+  npm run test
+```
+
+
+## Variáveis de Ambiente
+
+Para rodar esse projeto, você vai precisar adicionar as seguintes variáveis de ambiente no seu .env
+
+`VITE_REACT_API_URL=https://lumini-teste-tecnico-4.onrender.com/api`
