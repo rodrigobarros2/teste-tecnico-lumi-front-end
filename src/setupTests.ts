@@ -37,3 +37,10 @@ Object.defineProperty(HTMLCanvasElement.prototype, "getContext", {
     return null;
   }),
 });
+
+vi.mock("react-toastify", () => ({
+  toast: {
+    success: vi.fn(),
+    error: vi.fn(),
+  },
+}));

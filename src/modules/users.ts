@@ -55,18 +55,7 @@ export const extractPDF = async (pdfFile: File) => {
     toast.success("PDF cadastrado com sucesso!");
     return data;
   } catch (error) {
-    if (isAxiosError(error)) {
-      if (error.response?.status === 409) {
-        toast.error("Usuário com mês de referência já cadastrado");
-      } else if (error.response?.status === 400) {
-        toast.error("Selecione um arquivo para enviar");
-      } else {
-        toast.error("Ocorreu um erro. Tente novamente mais tarde.");
-      }
-    } else {
-      toast.error("Erro de rede ou servidor não disponível.");
-    }
-
+    handleError(error);
     throw error;
   }
 };
@@ -80,4 +69,18 @@ export const uploadPdf = async (pdfFile: File, id: string) => {
     },
   });
   return data;
+};
+
+const handleError = (error: unknown): void => {
+  if (isAxiosError(error)) {
+    if (error.response?.status === 409) {
+      toast.error("Usuário com mês de referência já cadastrado");
+    } else if (error.response?.status === 400) {
+      toast.error("Selecione um arquivo para enviar");
+    } else {
+      toast.error("Ocorreu um erro. Tente novamente mais tarde.");
+    }
+  } else {
+    toast.error("Erro de rede ou servidor não disponível.");
+  }
 };
