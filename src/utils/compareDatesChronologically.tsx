@@ -1,6 +1,6 @@
 import { IUser } from "../modules/users";
 
-export function compareDatesChronologically(a: string, b: string): number {
+export const compareDatesChronologically = (a: string, b: string): number => {
   const [monthA, yearA] = a.split("/");
   const [monthB, yearB] = b.split("/");
 
@@ -24,8 +24,8 @@ export function compareDatesChronologically(a: string, b: string): number {
   };
 
   return months[monthA] - months[monthB];
-}
+};
 
-export function returnsOrganizedData(users: IUser[]): void {
+export const returnsOrganizedData = (users: IUser[]): void => {
   users.sort((a, b) => compareDatesChronologically(a.referenceMonth, b.referenceMonth));
-}
+};

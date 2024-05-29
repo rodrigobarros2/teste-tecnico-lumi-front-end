@@ -1,7 +1,7 @@
 import "@testing-library/jest-dom";
 import { vi } from "vitest";
 
-// Este método é necessário para a criação de gráficos no ambiente de testes
+// Este método é necessário para a biblioteca de gráficos Chart.js no ambiente de testes
 Object.defineProperty(HTMLCanvasElement.prototype, "getContext", {
   value: vi.fn().mockImplementation((contextType) => {
     if (contextType === "2d") {
