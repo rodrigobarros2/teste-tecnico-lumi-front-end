@@ -1,7 +1,7 @@
 import axios from "axios";
 import { vi } from "vitest";
 import MockAdapter from "axios-mock-adapter";
-import { fetchUser, getPdfDownload } from "../users";
+import { getPdfDownload } from "../users";
 
 const mock = new MockAdapter(axios);
 
