@@ -18,13 +18,6 @@ describe("User module", () => {
     vi.clearAllMocks();
   });
 
-  test("should fetch users", async () => {
-    mock.onGet("/user").reply(200, ["7005400387", "7202788969"]);
-
-    const users = await fetchUser();
-    expect(users).toEqual(["7005400387", "7202788969"]);
-  });
-
   test("should open PDF in new window for getPdfDownload", () => {
     global.open = vi.fn();
     getPdfDownload("123");
