@@ -1,3 +1,4 @@
+Apresentação do projeto em vídeo https://www.youtube.com/watch?v=ExOMJE2Dxzc&ab_channel=RodrigoBarros
 
 ## Foi realizado o deploy da aplicação
 
